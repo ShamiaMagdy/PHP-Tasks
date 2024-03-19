@@ -1,0 +1,48 @@
+
+CREATE TABLE Author (
+    AuthorID INT PRIMARY KEY AUTO_INCREMENT,
+    Name VARCHAR(255) NOT NULL,
+    Biography TEXT,
+    Nationality VARCHAR(100)
+);
+
+CREATE TABLE Publisher (
+    PublisherID INT PRIMARY KEY AUTO_INCREMENT,
+    Name VARCHAR(255) NOT NULL,
+    Address TEXT,
+    PhoneNumber VARCHAR(100)
+);
+
+CREATE TABLE Genre (
+    GenreID INT PRIMARY KEY AUTO_INCREMENT,
+    Name VARCHAR(100) NOT NULL
+);
+
+CREATE TABLE Book (
+    BookID INT PRIMARY KEY AUTO_INCREMENT,
+    Title VARCHAR(255) NOT NULL,
+    AuthorID INT,
+    PublisherID INT,
+    GenreID INT,
+    ISBN VARCHAR(20) NOT NULL,
+    QuantityAvailable INT,
+    FOREIGN KEY (AuthorID) REFERENCES Authors(AuthorID),
+    FOREIGN KEY (PublisherID) REFERENCES Publishers(PublisherID),
+    FOREIGN KEY (GenreID) REFERENCES Genres(GenreID)
+);
+
+CREATE TABLE Borrower (
+    BorrowerID INT PRIMARY KEY AUTO_INCREMENT,
+    Name VARCHAR(255) NOT NULL,
+    PhoneNumber VARCHAR(100),
+);
+
+CREATE TABLE Transaction (
+    TransactionID INT PRIMARY KEY AUTO_INCREMENT,
+    BookID INT,
+    BorrowerID INT,
+    Date DATE,
+    Type ENUM('Borrow', 'Return'),
+    FOREIGN KEY (BookID) REFERENCES Books(BookID),
+    FOREIGN KEY (BorrowerID) REFERENCES Borrowers(BorrowerID)
+);

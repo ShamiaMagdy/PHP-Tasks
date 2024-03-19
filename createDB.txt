@@ -1,0 +1,59 @@
+CREATE TABLE Flights (
+    flight_id INT PRIMARY KEY,
+    flight_number VARCHAR(10),
+    departure_airport VARCHAR(50),
+    arrival_airport VARCHAR(50),
+    departure_time DATETIME,
+    arrival_time DATETIME
+);
+CREATE TABLE Passengers (
+    passenger_id INT PRIMARY KEY,
+    first_name VARCHAR(50),
+    last_name VARCHAR(50),
+    email VARCHAR(100),
+    phone VARCHAR(20)
+);
+CREATE TABLE Bookings (
+    booking_id INT PRIMARY KEY,
+    passenger_id INT REFERENCES Passengers(passenger_id),
+    flight_id INT REFERENCES Flights(flight_id),
+    booking_date DATETIME
+);
+CREATE TABLE Seats (
+    seat_id INT PRIMARY KEY,
+    flight_id INT REFERENCES Flights(flight_id),
+    seat_number VARCHAR(10),
+    class VARCHAR(20)
+);
+CREATE TABLE Aircrafts (
+    aircraft_id INT PRIMARY KEY,
+    aircraft_type VARCHAR(50),
+    capacity INT
+);
+CREATE TABLE Aircraft_Seats (
+    aircraft_id INT REFERENCES Aircrafts(aircraft_id),
+    seat_id INT REFERENCES Seats(seat_id),
+    PRIMARY KEY (aircraft_id, seat_id)
+);
+CREATE TABLE Payments (
+    payment_id INT PRIMARY KEY,
+    booking_id INT REFERENCES Bookings(booking_id),
+    amount DECIMAL(10, 2),
+    payment_date DATETIME
+);
+CREATE TABLE Airports (
+    airport_code VARCHAR(3) PRIMARY KEY,
+    airport_name VARCHAR(50),
+    location VARCHAR(50)
+);
+CREATE TABLE Routes (
+    route_id INT PRIMARY KEY,
+    departure_airport VARCHAR(3) REFERENCES Airports(airport_code),
+    arrival_airport VARCHAR(3) REFERENCES Airports(airport_code)
+);
+CREATE TABLE Fares (
+    fare_id INT PRIMARY KEY,
+    route_id INT REFERENCES Routes(route_id),
+    class VARCHAR(20),
+    amount DECIMAL(10, 2)
+);
