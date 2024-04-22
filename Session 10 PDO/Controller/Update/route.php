@@ -16,7 +16,8 @@ $sql= $con->prepare($query_update);
 //die;
 $res=$sql->execute();
 
- var_dump($res);
+ //var_dump($res);
+ header('Location: http://localhost/PHP%20tasks/PHP-Tasks/Session%2010%20PDO/Controller/Delete/route.php');
 
 
 
